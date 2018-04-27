@@ -1,0 +1,26 @@
+
+.labelStyle{
+	text-align:left;
+	font-size:12px;
+}
+
+.inputStyle{
+	font-size : 12px;
+}
+
+.rowStyle{
+	margin-top:10px;
+}
+
+.image-holder{
+	width: 40px;
+	height:40px;
+	margin: 0px 1px 1px 0px;
+	background-color: #EEEEEE;
+	float: left;
+}
+
+.image{
+	width: 40px;
+	height:40px;
+}

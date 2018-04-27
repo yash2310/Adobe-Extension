@@ -1,0 +1,92 @@
+<!doctype html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./ext.js"></script>
+<script src="./lib/CSInterface-4.0.0.js"></script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./style.css">
+<title>FirstDemo</title>
+
+<script type="text/javascript">
+	var imageData = {};
+	function onImageDragStart(event) {
+		imageData.code = '{image:5000001}';
+		imageData.type = $(event.currentTarget).attr("source-file-type");
+		imageData.src = (new CSInterface).getSystemPath(SystemPath.EXTENSION)
+				+ $(event.currentTarget).attr("source-file");
+		event.dataTransfer.setData("text/plain", imageData.code);
+
+		//ev.dataTransfer.setDragImage(ev.target,100,100);
+		return true;
+	}
+	function onImageDragEnd(ev) {
+		if (!imageData.code)
+			return;
+		var script = 'replaceImageString("' + imageData.code + '", "'
+				+ imageData.type + '", "' + imageData.src + '")';
+		imageData = {};
+
+		var csLib = new CSInterface();
+		new csLib.evalScript(script, function() {
+			//console.log("Done");
+		});
+		return true;
+	}
+</script>
+
+</head>
+
+<body onLoad="onLoaded()">
+	<div id="container">
+
+		<div class="form-group">
+			<div class="col-md-6 offset-md-3">
+				<div class="row col-md-6 offset-md-3 rowStyle">
+
+					<button class="default btn btn-primary" id="btn_IDSN"
+						style="width: 100%; height: 40px;" onClick="onClickButton('IDSN')">
+						Load Service Data</button>
+				</div>
+
+				<div class="row col-md-6 offset-md-3 rowStyle">
+					<label for="sel1" class="labelStyle">Category :-</label> <select
+						class="form-control inputStyle" style="height: 30px;" id="sel1">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+				</div>
+
+				<div class="row col-md-6 offset-md-3 rowStyle">
+					<label for="sel1" class="labelStyle">Sub-Category :-</label> <select
+						class="form-control inputStyle" style="height: 30px;" id="sel1">
+						<option value="image/image1.jpg">1</option>
+						<option value="../image/image2.jpg">2</option>
+						<option value="../image/image3.jpg">3</option>
+						<option value="../image/image4.jpg">4</option>
+					</select>
+				</div>
+
+				<div class="row col-md-6 offset-md-3 rowStyle">
+					<!-- 					<img id="dragImage" src="image/image1.jpg" draggable="true" height="42" width="42"> -->
+
+					<div class="image-holder" draggable="true"
+						ondragstart="onImageDragStart(event)"
+						ondragend="onImageDragEnd(event)" source-file-type="vector"
+						source-file="image/image1.jpg">
+						<div class="image"
+							style="background: url('image/image1.jpg') no-repeat center center;"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

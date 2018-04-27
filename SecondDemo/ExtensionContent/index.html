@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./ext.js"></script>
+<script src="./lib/CSInterface-4.0.0.js"></script>
+<script src="./lib/themeManager.js"></script>
+<script src="./lib/Jquery/jquery-3.1.1.min.js"></script>
+
+
+<link id="ppstyle" rel="stylesheet" type="text/css" href="./style.css">
+
+
+
+<script type="text/javascript">
+	themeManager.init();
+
+	var imageData = {};
+	function onImageDragStart(event) {
+		imageData = {};
+		imageData.code = '{image:5000001}';
+		imageData.type = $(event.currentTarget).attr("source-file-type");
+		imageData.src = $(event.currentTarget).attr("source-file");
+		event.dataTransfer.setData("text/plain", imageData.code);
+
+		//ev.dataTransfer.setDragImage(ev.target,100,100);
+		return true;
+	}
+	function onImageDragEnd(ev) {
+		if (!imageData.code)
+			return;
+		var script = 'replaceImageString("' + imageData.code + '", "'
+				+ imageData.type + '", "' + imageData.src + '")';
+		imageData = {};
+
+		var csLib = new CSInterface();
+		csLib.evalScript(script, function() {
+			//alert(script);
+			//console.log("Done");
+		});
+		return true;
+	}
+</script>
+
+
+<title>SecondDemo</title>
+</head>
+
+<body>
+	<div class="title">Colors:</div>
+
+	<div class="title">Raster images:</div>
+	<div class="container hostBorder">
+		<div class="image-holder" draggable="true"
+			ondragstart="onImageDragStart(event)"
+			ondragend="onImageDragEnd(event)" source-file-type="raster"
+			source-file="/resources/png_example_1.png">
+			<div class="image"
+				style="background: url('resources/png_example_1_thumb.png') no-repeat center center;"></div>
+		</div>
+		<div class="image-holder" draggable="true"
+			ondragstart="onImageDragStart(event)"
+			ondragend="onImageDragEnd(event)" source-file-type="raster"
+			source-file="/resources/jpg_example_1.jpg">
+			<div class="image"
+				style="background: url('resources/jpg_example_1_thumb.png') no-repeat center center;"></div>
+		</div>
+	</div>
+
+	<!-- 	<div class="title">Vector images:</div> -->
+	<!-- 	<div class="container hostBorder"> -->
+	<!-- 		<div class="image-holder" draggable="true" -->
+	<!-- 			ondragstart="onImageDragStart(event)" -->
+	<!-- 			ondragend="onImageDragEnd(event)" source-file-type="vector" -->
+	<!-- 			source-file="/resources/vector_example_1.ai"> -->
+	<!-- 			<div class="image" -->
+	<!-- 				style="background: url('resources/vector_example_1_thumb.png') no-repeat center center;"></div> -->
+	<!-- 		</div> -->
+	<!-- 		<div class="image-holder" draggable="true" -->
+	<!-- 			ondragstart="onImageDragStart(event)" -->
+	<!-- 			ondragend="onImageDragEnd(event)" source-file-type="vector" -->
+	<!-- 			source-file="/resources/vector_example_2.eps"> -->
+	<!-- 			<div class="image" -->
+	<!-- 				style="background: url('resources/vector_example_2_thumb.png') no-repeat center center;"></div> -->
+	<!-- 		</div> -->
+	<!-- 		<div class="image-holder" draggable="true" -->
+	<!-- 			ondragstart="onImageDragStart(event)" -->
+	<!-- 			ondragend="onImageDragEnd(event)" source-file-type="vector" -->
+	<!-- 			source-file="/resources/vector_example_3.svg"> -->
+	<!-- 			<div class="image" -->
+	<!-- 				style="background: url('resources/vector_example_3_thumb.png') no-repeat center center;"></div> -->
+	<!-- 		</div> -->
+	<!-- 		<div class="image-holder" draggable="true" -->
+	<!-- 			ondragstart="onImageDragStart(event)" -->
+	<!-- 			ondragend="onImageDragEnd(event)" source-file-type="vector" -->
+	<!-- 			source-file="/resources/vector_example_4.eps"> -->
+	<!-- 			<div class="image" -->
+	<!-- 				style="background: url('resources/vector_example_4_thumb.png') no-repeat center center;"></div> -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
+
+</body>
+
+</html>
